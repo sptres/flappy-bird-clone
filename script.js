@@ -9,6 +9,13 @@ hole.addEventListener('animationiteration', () => {
   hole.style.top = random + 'px';
   counter++;
 });
+
+document.addEventListener('keydown', (event) => {
+  if (event.code === 'Space' && !jumping) {
+    jump();
+  }
+});
+
 setInterval(function () {
   var characterTop = parseInt(
     window.getComputedStyle(character).getPropertyValue('top')
