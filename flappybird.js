@@ -111,7 +111,8 @@ function update() {
   context.fillText(`High: ${highScore}`, boardWidth - 5, 45);
 
   if (gameOver) {
-    context.fillText('GAME OVER', 5, 90);
+    context.fillText('GAME OVER', 240, 150);
+    context.fillText('Play again? JUMP!', 260, 300);
   }
 }
 
@@ -146,7 +147,7 @@ function placePipes() {
 }
 
 function moveBird(e) {
-  if (e.code == 'Space' || e.code == 'ArrayUp' || e.code == 'KeyX') {
+  if (e.code == 'Space' || e.code == 'ArrowUp' || e.code == 'KeyX') {
     // jump
     velocityY = -3;
 
