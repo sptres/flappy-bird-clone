@@ -33,6 +33,7 @@ let velocityX = -1.5; // pipes moving speed
 let velocityY = 0; // bird's jumping speed
 let gravity = 0.1;
 
+let gameStarted = false;
 let gameOver = false;
 let score = 0;
 let highScore = localStorage.getItem('highScore') || 0;
@@ -59,11 +60,19 @@ window.onload = function () {
   requestAnimationFrame(update);
   setInterval(placePipes, 1500); // every 1.5seconds
   document.addEventListener('keydown', moveBird);
+  document.addEventListener('keydown', startGame);
 };
+
+function startGame(e) {
+  if (e.code == 'Space' || e.code == 'ArrowUp') {
+    gameStarted = true;
+    document.removeEventListener('keydown', startGame);
+  }
+}
 
 function update() {
   requestAnimationFrame(update);
-  if (gameOver) {
+  if (!gameStarted || gameOver) {
     return;
   }
   context.clearRect(0, 0, board.width, board.height);
