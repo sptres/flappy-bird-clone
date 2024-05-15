@@ -5,7 +5,7 @@ let boardHeight = 640;
 let context;
 
 // bird
-let birdWidth = 34; // width/hieght ratio = 408/228 = 17/12
+let birdWidth = 34; // width/height ratio = 408/228 = 17/12
 let birdHeight = 24;
 let birdX = boardWidth / 8;
 let birdY = boardHeight / 2;
@@ -20,7 +20,7 @@ let bird = {
 
 // pipes
 let pipeArray = [];
-let pipeWidth = 64; // width / height ratio = 384/3072 = 1/8
+let pipeWidth = 64; // width/height ratio = 384/3072 = 1/8
 let pipeHeight = 512;
 let pipeX = boardWidth;
 let pipeY = 0;
@@ -58,15 +58,20 @@ window.onload = function () {
   bottomPipeImg.src = './bottompipe.png';
 
   requestAnimationFrame(update);
-  setInterval(placePipes, 1500); // every 1.5seconds
+  setInterval(placePipes, 1500); // every 1.5 seconds
   document.addEventListener('keydown', moveBird);
   document.addEventListener('keydown', startGame);
+
+  // Add touch event listeners
+  document.addEventListener('touchstart', moveBird);
+  document.addEventListener('touchstart', startGame);
 };
 
 function startGame(e) {
-  if (e.code == 'Space' || e.code == 'ArrowUp') {
+  if (e.code == 'Space' || e.code == 'ArrowUp' || e.type == 'touchstart') {
     gameStarted = true;
     document.removeEventListener('keydown', startGame);
+    document.removeEventListener('touchstart', startGame);
   }
 }
 
@@ -79,14 +84,14 @@ function update() {
 
   // bird
   velocityY += gravity;
-  bird.y = Math.max(bird.y + velocityY, 0); // apply gravity to current bird.y so that it don't go over the canvas
+  bird.y = Math.max(bird.y + velocityY, 0); // apply gravity to current bird.y so that it doesn't go over the canvas
   context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
   if (bird.y > board.height) {
     gameOver = true;
   }
 
-  //pipes
+  // pipes
   for (let i = 0; i < pipeArray.length; i++) {
     let pipe = pipeArray[i];
     pipe.x += velocityX;
@@ -156,7 +161,12 @@ function placePipes() {
 }
 
 function moveBird(e) {
-  if (e.code == 'Space' || e.code == 'ArrowUp' || e.code == 'KeyX') {
+  if (
+    e.code == 'Space' ||
+    e.code == 'ArrowUp' ||
+    e.code == 'KeyX' ||
+    e.type == 'touchstart'
+  ) {
     // jump
     velocityY = -3;
 
